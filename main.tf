@@ -211,3 +211,14 @@ resource "aws_lb_target_group_attachment" "web_attachment" {
   target_id        = aws_instance.web_server.id
   port             = 80
 }
+terraform {
+  required_version = ">= 1.11.0"
+  
+  backend "s3" {
+    bucket         = "techbhuti-terraform-state-bucket" # Replace with a globally unique bucket name
+    key            = "three-tier-vpc/terraform.tfstate"
+    region         = "us-east-1"
+    encrypt        = true
+    use_lockfile   = true
+  }
+}
