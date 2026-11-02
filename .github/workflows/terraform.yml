@@ -21,3 +21,29 @@ jobs:
 
     - name: Terraform Validate
       run: terraform validate
+name: Terraform CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  terraform:
+    name: 'Terraform Validate and Plan'
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v3
+
+    - name: Terraform Init (Offline Backend)
+      run: terraform init -backend=false
+
+    - name: Terraform Validate
+      run: terraform validate
+
